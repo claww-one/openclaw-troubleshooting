@@ -41,3 +41,18 @@
 2.  **Milk (Agent)**：院長/主經理，負責決策與派工。
 3.  **子代理 (Sub-agents)**：特聘研究員，擁有獨立環境，透過核心直接連線 LLM，與 Milk 共享通道權限。
 
+
+## 2026-02-07 - Gemini 3 Pro API 404 Error
+
+### 問題描述
+在執行 `lofi-market-research` 子代理任務時，使用 `gemini-3-pro-preview` 模型導致任務失敗，無產出內容。
+
+### 錯誤訊息
+`errorMessage: "Cloud Code Assist API error (404): Requested entity was not found."`
+
+### 問題分析
+這似乎是 Google Gemini API 端的暫時性錯誤，或者是該 Preview 模型在某些區域/時段的不穩定。導致子代理無法生成回應。
+
+### 解決方案
+將任務模型降級為 `gemini-2.5-flash` 進行重試，成功避開錯誤並完成任務。
+
