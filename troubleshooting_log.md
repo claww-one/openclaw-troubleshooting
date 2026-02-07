@@ -56,3 +56,15 @@
 ### 解決方案
 將任務模型降級為 `gemini-2.5-flash` 進行重試，成功避開錯誤並完成任務。
 
+
+## 2026-02-07 - Web Search & Browser Tool Outage
+
+### 問題描述
+在執行 `lofi-market-research-retry` 任務時，子代理回報 `web_search` 和 `browser` 工具皆無法回傳任何結果。
+
+### 影響
+無法進行即時的網路市場數據分析。
+
+### 應變措施
+由 Agent Main (Milk) 基於內建知識庫，手動產出市場分析報告，確保專案進度不受影響。
+
