@@ -23,3 +23,21 @@
 在確認子代理確實未啟動後，立即執行了  命令，成功啟動了子代理。
 
 
+
+## 2026-02-07 - Config Patch JSON 語法錯誤與架構定義
+
+### 問題描述
+在嘗試使用 `gateway config.patch` 升級預設模型時，反覆遇到 `SyntaxError: JSON5: invalid character` 錯誤。
+
+### 問題分析
+該錯誤源於將從 `config.get` 獲取的 `raw` 配置字串（包含換行符號和引號）直接傳遞給 patch 工具時，未能正確處理 JSON 字串的脫逸 (escaping)，導致工具解析失敗。
+
+### 解決方案
+在傳遞 `raw` 參數時，確保將其視為完整的字串實字 (string literal)，避免因格式化工具的額外處理而破壞 JSON 結構。最終成功應用補丁並重啟核心。
+
+### 架構定義更新 (重要)
+確立了 **OpenClaw AI 研究院** 的運作模式：
+1.  **OpenClaw 核心**：底層基礎設施與連線通道 (Zeabur AI Hub)。
+2.  **Milk (Agent)**：院長/主經理，負責決策與派工。
+3.  **子代理 (Sub-agents)**：特聘研究員，擁有獨立環境，透過核心直接連線 LLM，與 Milk 共享通道權限。
+
